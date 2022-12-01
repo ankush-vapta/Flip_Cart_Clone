@@ -1,0 +1,10 @@
+ .navbar1{
+    display: flex;
+    justify-content: space-around;
+    border: none;
+    outline: none;
+    font-size:25px;
+    background-color: rgba(186, 142, 228, 0.749);
+
+} 
+
