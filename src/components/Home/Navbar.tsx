@@ -15,6 +15,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Button from './ButtonComponent';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -185,6 +187,7 @@ const Navbar = () => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Button />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
