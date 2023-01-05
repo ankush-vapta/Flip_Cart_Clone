@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import handleApi from '../../services/api'
+import DataContext from '../../context/DataProvider'
+// DataContext is context that is used to staorevalue
+
 import { Dialog, DialogContent, TextField, Box, Button, Typography, styled } from '@mui/material';
 
 const Component = styled(DialogContent)`
@@ -100,8 +104,16 @@ const LoginDaiglog: Function = (props: any) => {
     const [account, toggleAccount] = useState(accountInitialValues.login);
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues)
-    console.log(login, "login")
-    console.log(signup, "signup")
+
+
+    function onInputChange(e: any) {
+        setSignup({ ...signup, [e.target.name]: e.target.value })
+    }
+
+    async function signUpUser() {
+        let responce = handleApi(signup)
+        return responce;
+    }
 
     return (
         <>
@@ -125,13 +137,13 @@ const LoginDaiglog: Function = (props: any) => {
                                     <CreateAccount onClick={() => toggleAccount(accountInitialValues.signup)}>New to Flipkart? Create an account</CreateAccount>
                                 </Wrapper> :
                                 <Wrapper>
-                                    <TextField variant="standard" name='firstname' label='Enter Firstname' onChange={(e) => setSignup({ ...signup, [e.target.name]: e.target.value })} />
-                                    <TextField variant="standard" name='lastname' label='Enter Lastname' onChange={(e) => setSignup({ ...signup, [e.target.name]: e.target.value })} />
-                                    <TextField variant="standard" name='username' label='Enter Username' onChange={(e) => setSignup({ ...signup, [e.target.name]: e.target.value })} />
-                                    <TextField variant="standard" name='email' label='Enter Email' onChange={(e) => setSignup({ ...signup, [e.target.name]: e.target.value })} />
-                                    <TextField variant="standard" name='password' label='Enter Password' onChange={(e) => setSignup({ ...signup, [e.target.name]: e.target.value })} />
-                                    <TextField variant="standard" name='phone' label='Enter Phone' onChange={(e) => setSignup({ ...signup, [e.target.name]: e.target.value })} />
-                                    <LoginButton onClick={() => toggleAccount(accountInitialValues.login)} >Continue</LoginButton>
+                                    <TextField variant="standard" name='firstname' label='Enter Firstname' onChange={(e) => onInputChange(e)} />
+                                    <TextField variant="standard" name='lastname' label='Enter Lastname' onChange={(e) => onInputChange(e)} />
+                                    <TextField variant="standard" name='username' label='Enter Username' onChange={(e) => onInputChange(e)} />
+                                    <TextField variant="standard" name='email' label='Enter Email' onChange={(e) => onInputChange(e)} />
+                                    <TextField variant="standard" name='password' label='Enter Password' onChange={(e) => onInputChange(e)} />
+                                    <TextField variant="standard" name='phone' label='Enter Phone' onChange={(e) => onInputChange(e)} />
+                                    <LoginButton onClick={() => signUpUser()} >Continue</LoginButton>
                                 </Wrapper>
                         }
                     </Box>
@@ -142,3 +154,7 @@ const LoginDaiglog: Function = (props: any) => {
 }
 
 export default LoginDaiglog
+
+function authSignup(signup: { firstname: string; lastname: string; username: string; email: string; password: string; phone: string; }) {
+    throw new Error('Function not implemented.');
+}
