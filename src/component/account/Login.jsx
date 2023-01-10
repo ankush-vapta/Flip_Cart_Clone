@@ -34,6 +34,12 @@ const Login = ({ isUserAuth }) => {
 
 
   const { setAccount } = useContext(DataContext);
+  /*
+  const obj = {
+    name:abc
+  }
+  const{name} = obj
+   */
 
   function toggleSignUp(e) {
     e.preventDefault()
@@ -99,23 +105,6 @@ const Login = ({ isUserAuth }) => {
 
 
   }
-
-
-  //axios
-  /*
-  function signupUser() {
-    axios.post(baseUrl , login)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-  */
-
-
-
 
   return (
     <>

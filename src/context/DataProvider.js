@@ -15,7 +15,7 @@ function DataProvider({ children }) {
             setAccount
         }}>
             {children}
-           
+
         </DataContext.Provider>
     )
 }

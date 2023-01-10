@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import DataSaverOnTwoToneIcon from '@mui/icons-material/DataSaverOnTwoTone';
 import photu from './photu.jpg'
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import axios from "axios";
 import { DataContext } from "../../context/DataProvider"
 import { useContext } from 'react';
@@ -15,12 +15,14 @@ const initialPost = {
     categories: '',
     createdDate: new Date()
 }
-const Createpost = () => {
+const Updatepost = () => {
     const [post, setPost] = useState(initialPost);
     const [file, setFile] = useState("");
     const { account } = useContext(DataContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const { id } = useParams();
+    // this id go to navigate 
 
     useEffect(() => {
         function getImage() {
@@ -45,15 +47,30 @@ const Createpost = () => {
             }
         }
         getImage();
+        // jb api call krege our jo responce aayega iske equal kr dege 
+        // use if else statement after search
         post.categories = location.search?.split("=")[1] || "All";
         post.username = account.username;
     }, [file])
 
+    useEffect(() => {
+        const fetchDataUrl = `http://localhost:8800/post`
+        function fetchData(id) {
+            axios.get(`${fetchDataUrl}/${id}`).then((responce) => {
+                setPost(responce.data);
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+        fetchData(id)
+    }, [])
+
     function handleOnChange(e) {
         setPost({ ...post, [e.target.name]: e.target.value })
     }
+
     const photo = post.picture ? post.picture : photu;
-    const baseUrl = 'http://localhost:8800/create'
+    const baseUrl = 'http://localhost:8800/update'
     async function handleOnClick(e) {
         const tokenValue = getToken()
         e.preventDefault()
@@ -62,7 +79,9 @@ const Createpost = () => {
             headers: { "Authorization": tokenValue }
         })
             .then(function (response) {
-                navigate('/');
+                console.log(response.data, "responce from update post")
+                navigate(`/details/${id}`);
+
             })
             .catch(function (error) {
                 console.log(error, "error come from here");
@@ -80,12 +99,11 @@ const Createpost = () => {
                             <DataSaverOnTwoToneIcon />
                             <input className="form-control d-none" type="file" id="formFile" onChange={(e) => setFile(e.target.files[0])} />
                         </label>
-                        <input type="text" className="form-control" onChange={(e) => handleOnChange(e)} aria-label="Sizing example input" name="title" />
-
-                        <button type="button" onClick={(e) => handleOnClick(e)} className="btn btn-success">Success</button>
+                        <input type="text" value={post.title} className="form-control" onChange={(e) => handleOnChange(e)} aria-label="Sizing example input" name="title" />
+                        <button type="button" onClick={(e) => handleOnClick(e)} className="btn btn-success">Update</button>
                     </div>
                     <div className="col-md-12 my-5">
-                        <input placeholder='Tell yout stary' style={{ height: "100px" }} onChange={(e) => handleOnChange(e)} type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing" name='description' />
+                        <input placeholder='Tell yout stary' value={post.description} style={{ height: "100px" }} onChange={(e) => handleOnChange(e)} type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing" name='description' />
                     </div>
                 </div>
             </div>
@@ -93,4 +111,4 @@ const Createpost = () => {
     )
 }
 
-export default Createpost; 
+export default Updatepost; 
