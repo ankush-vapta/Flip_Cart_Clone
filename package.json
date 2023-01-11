@@ -50,6 +50,14 @@
       "react-app/jest"
     ]
   },
+  "jsx-a11y/anchor-is-valid": [
+    "off",
+    {
+      "components": ["Link"],
+      "specialLink": ["hrefLeft", "hrefRight"],
+      "aspects": ["noHref", "invalidHref", "preferButton"]
+    }
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
@@ -61,5 +69,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.31.11"
   }
+  
+ 
 }
