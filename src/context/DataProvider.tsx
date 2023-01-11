@@ -1,16 +1,22 @@
 import React, { createContext, useState } from 'react'
 
 
-export const DataContext: any = createContext(" ");
+type IProductContext = [any, React.Dispatch<React.SetStateAction<any>>];
+export const DataContext = createContext<any>(null);
 
-type IProductContext = [any | undefined, React.Dispatch<React.SetStateAction<any | undefined>>];
-
+/*
+type DataContextType = any;
+export const DataContext1 = React.createContext<DataContextType | null>(null);
+*/
 
 function DataProvider({ children }: any) {
-    const [account, setAccount] = useState<IProductContext | any>("")
+    const [account, setAccount] = useState<any>("")
+    setTimeout(() => {
+        console.log("account from context =  ", account)
+    }, 1000)
     return (
         <DataContext.Provider value={{
-            account: account, setAccount: setAccount
+            account, setAccount
         }}>
             {children}
 

@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <ConstanstNavbar />
-      <Box style={{padding:"10px 10px" , backgroundColor:"#808080"}}>
+      <Box style={{padding:"10px 10px" , backgroundColor:"#F7F5EB"}}>
       <Banner />
       </Box>
 

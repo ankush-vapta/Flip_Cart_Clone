@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import handleApi from '../../services/api'
-import DataContext from '../../context/DataProvider'
+import { DataContext } from '../../context/DataProvider'
 // DataContext is context that is used to staorevalue
 
 import { Dialog, DialogContent, TextField, Box, Button, Typography, styled } from '@mui/material';
@@ -53,6 +53,7 @@ const Wrapper = styled(Box)`
         margin-top: 20px;
     }
 `;
+
 /*
 const Error = styled(Typography)`
     font-size: 10px;
@@ -105,6 +106,12 @@ const LoginDaiglog: Function = (props: any) => {
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues)
 
+    const { setAccount } = useContext(DataContext);
+
+    function handleClose() {
+        setOpen(false)
+        toggleAccount(accountInitialValues.login)
+    }
 
     function onInputChange(e: any) {
         setSignup({ ...signup, [e.target.name]: e.target.value })
@@ -112,12 +119,15 @@ const LoginDaiglog: Function = (props: any) => {
 
     async function signUpUser() {
         let responce = handleApi(signup)
+        if (!responce) return;
+        handleClose()
+        setAccount(signup.firstname)
         return responce;
     }
 
     return (
         <>
-            <Dialog open={open} onClose={() => setOpen(false)}>
+            <Dialog open={open} onClose={handleClose}>
                 <Component>
                     <Box style={{ display: 'flex', height: '100%' }}>
                         <Image>
@@ -155,6 +165,8 @@ const LoginDaiglog: Function = (props: any) => {
 
 export default LoginDaiglog
 
-function authSignup(signup: { firstname: string; lastname: string; username: string; email: string; password: string; phone: string; }) {
-    throw new Error('Function not implemented.');
-}
+// function authSignup(
+//     signup: { firstname: string; lastname: string; username: string; email: string; password: string; phone: string; }
+//     ) {
+//     throw new Error('Function not implemented.');
+// }
