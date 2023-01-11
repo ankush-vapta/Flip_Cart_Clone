@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react'
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter } from "react-router-dom";
 
 import Header from './component/header/Header'
 import DataProvider from './context/DataProvider';
@@ -36,9 +37,9 @@ function App() {
     const [isAuth, isUserAuth] = useState(false)
     return (
         <>
+            <ToolkitNavbar />
             {/*  we can pass data with 2 different method 1.with propas 2.agar kisi opeaning and closing bracket ke ander component pass kiya he to usko children se data milega   */}
-            <DataProvider>
-                    <ToolkitNavbar></ToolkitNavbar>
+                 {/* <DataProvider> */}
                 <Routes>
                     <Route path="/" element={<ToolkitHome />} />
                     <Route path="/Cart" element={<ToolkitCart />} />
@@ -50,21 +51,21 @@ function App() {
                         <Route path="/" element={<Home />} />
                     </Route>
                     <Route path='/create' element={<PrivateRoute isAuth={isAuth} />} >
-                        <Route path="/create" element={<CreatePost />} />
+                    <Route path="/create" element={<CreatePost />} />
                     </Route>
-
+                    
                     <Route path='/details/:id' element={<PrivateRoute isAuth={isAuth} />} >
-                        <Route path="/details/:id" element={<DetailsView />} />
+                    <Route path="/details/:id" element={<DetailsView />} />
                     </Route>
-
+                    
                     <Route path='/update/:id' element={<PrivateRoute isAuth={isAuth} />} >
-                        <Route path="/update/:id" element={<Updatepost />} />
-                 
-                </Route>
-                    */}
+                    <Route path="/update/:id" element={<Updatepost />} />
+                    
+                    </Route>
+                */}
                 </Routes>
-                
-            </DataProvider>
+             {/* </DataProvider> */}
+
         </>
     );
 }

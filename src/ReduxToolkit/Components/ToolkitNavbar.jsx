@@ -7,8 +7,11 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ToolkitNavbar = () => {
+    const items = useSelector((state) => state.cart);
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }} >
@@ -27,7 +30,7 @@ const ToolkitNavbar = () => {
                             <Button spacing={2} variant="filledTonal" color="success">  <Link to="/">  Home</Link>  </Button>
                             <Button spacing={2} variant="filledTonal" color="success"> <Link to="/Cart">  Cart</Link> </Button>
                         </Typography>
-                        <Typography> Cart ::- 0</Typography>
+                        <Typography> Cart ::- {items.length}</Typography>
                     </Toolbar>
                 </AppBar>
             </Box>
