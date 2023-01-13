@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import handleApi from '../../services/api'
+import { authSignup, authLogin } from '../../services/api'
 import { DataContext } from '../../context/DataProvider'
 // DataContext is context that is used to staorevalue
 
@@ -54,7 +54,7 @@ const Wrapper = styled(Box)`
     }
 `;
 
-/*
+
 const Error = styled(Typography)`
     font-size: 10px;
     color: #ff6161;
@@ -62,7 +62,6 @@ const Error = styled(Typography)`
     margin-top: 10px;
     font-weight: 600;
 `
-*/
 
 const Image = styled(Box)`
     background: #2874f0 url(https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png) center 85% no-repeat;
@@ -105,6 +104,7 @@ const LoginDaiglog: Function = (props: any) => {
     const [account, toggleAccount] = useState(accountInitialValues.login);
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues)
+    const [error, setError] = useState(false)
 
     const { setAccount } = useContext(DataContext);
 
@@ -118,13 +118,20 @@ const LoginDaiglog: Function = (props: any) => {
     }
 
     async function signUpUser() {
-        let responce = handleApi(signup)
+        let responce = authSignup(signup)
         if (!responce) return;
         handleClose()
         setAccount(signup.firstname)
         return responce;
     }
 
+    async function loginUser() {
+        let responce: any = await authLogin(login);
+        if (responce.status == 200) {
+            handleClose()
+            setAccount(login.username)
+        }
+    }
     return (
         <>
             <Dialog open={open} onClose={handleClose}>
@@ -138,10 +145,10 @@ const LoginDaiglog: Function = (props: any) => {
                             account.view === 'login' ?
                                 <Wrapper>
                                     <TextField variant="standard" name='username' label='Enter Email/Mobile number' onChange={(e) => setLogin({ ...login, [e.target.name]: e.target.value })} />
-                                    {< >Please enter valid Email ID/Mobile number</ >}
+                                    {error && <Error >Please enter valid Email ID/Mobile number</Error >}
                                     <TextField variant="standard" name='password' label='Enter Password' onChange={(e) => setLogin({ ...login, [e.target.name]: e.target.value })} />
                                     <Text>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</Text>
-                                    <LoginButton   >Login</LoginButton>
+                                    <LoginButton onClick={loginUser} >Login</LoginButton>
                                     <Text style={{ textAlign: 'center' }}>OR</Text>
                                     <RequestOTP>Request OTP</RequestOTP>
                                     <CreateAccount onClick={() => toggleAccount(accountInitialValues.signup)}>New to Flipkart? Create an account</CreateAccount>

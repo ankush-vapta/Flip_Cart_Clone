@@ -12,7 +12,7 @@ export const DataContext1 = React.createContext<DataContextType | null>(null);
 function DataProvider({ children }: any) {
     const [account, setAccount] = useState<any>("")
     setTimeout(() => {
-        console.log("account from context =  ", account)
+        // console.log("account from context =  ", account)
     }, 1000)
     return (
         <DataContext.Provider value={{

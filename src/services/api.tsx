@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 const URL = "http://localhost:8000"
-async function authSignup(
+export async function authSignup(
     data: Object
 ) {
     try {
@@ -11,8 +11,19 @@ async function authSignup(
         return console.log("error from axios signup", error)
     }
 }
+export async function authLogin(
+    data: Object) {
+    try {
+        const reponces: any = axios.post(`${URL}/login`, data);
+        return reponces;
 
-export default authSignup;
+    } catch (error) {
+        return console.log("error from axios login")
+    }
+}
+
+
+
 
 
 
