@@ -1,4 +1,4 @@
-import React from 'react'
+//@typescript-eslint/no-unused-vars
 import axios from 'axios'
 
 const URL = "http://localhost:8000"
