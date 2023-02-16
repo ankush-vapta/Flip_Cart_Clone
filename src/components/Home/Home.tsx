@@ -2,15 +2,12 @@
 import { useEffect } from "react"
 import { useDispatch } from 'react-redux/es/exports';
 import { useSelector } from "react-redux/es/hooks/useSelector";
-
 import Banner from './Banner'
 import ConstanstNavbar from './ConstantNavbar'
 import { getProduct } from '../Redux/action/action';
 import Slide from "./Slide";
 import MidSection from "./MidSection";
-
 import { Box } from '@mui/material';
-
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,14 +15,11 @@ const Home = () => {
   const getProductReducer: any = useSelector(state => state.getProductReducer)
   const { products } = getProductReducer;
 
-
   // @ts-ignore
   useEffect(() => {
     // @ts-ignore
     dispatch(getProduct())
   }, [])
-
-
 
   return (
     <>
@@ -36,9 +30,7 @@ const Home = () => {
         <Slide products={products} title="Deal Of The Day" />
         <MidSection />
         <Slide products={products} title="Deal Of The Day" />
-
       </Box>
-
     </>
   )
 }
